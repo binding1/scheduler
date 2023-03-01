@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Axios from "axios";
 import "components/Application.scss";
-import { getAppointmentsForDay } from "helpers/selectors";
+import { getAppointmentsForDay, getInterview } from "helpers/selectors";
 
 import DayList from "./DayList";
 import Appointment from "./Appointment";
@@ -22,7 +22,11 @@ export default function Application(props) {
   const dailyAppointments = getAppointmentsForDay(state, state.day);
 
   useEffect(() => {
-    Promise.all([Axios.get(dayURL), Axios.get(appointmentURL)]).then((all) => {
+    Promise.all([
+      Axios.get(dayURL),
+      Axios.get(appointmentURL),
+      Axios.get(interviewerURL),
+    ]).then((all) => {
       setState((prev) => ({
         ...prev,
         days: all[0].data,
@@ -31,8 +35,17 @@ export default function Application(props) {
     });
   }, []);
 
-  const appointment = dailyAppointments.map((appointment) => {
-    return <Appointment key={appointment.id} {...appointment} />;
+  const schedule = dailyAppointments.map((appointment) => {
+    const interview = getInterview(state, appointment.interview);
+
+    return (
+      <Appointment
+        key={appointment.id}
+        id={appointment.id}
+        time={appointment.time}
+        interview={interview}
+      />
+    );
   });
 
   return (
@@ -53,7 +66,7 @@ export default function Application(props) {
           alt="Lighthouse Labs"
         />
       </section>
-      <section className="schedule">{appointment}</section>
+      <section className="schedule">{schedule}</section>
     </main>
   );
 }
