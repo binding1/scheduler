@@ -1,48 +1,10 @@
 import React, { useState, useEffect } from "react";
 import Axios from "axios";
 import "components/Application.scss";
+import { getAppointmentsForDay } from "helpers/selectors";
 
 import DayList from "./DayList";
 import Appointment from "./Appointment";
-
-const appointments = {
-  1: {
-    id: 1,
-    time: "12pm",
-  },
-  2: {
-    id: 2,
-    time: "1pm",
-    interview: {
-      student: "Lydia Miller-Jones",
-      interviewer: {
-        id: 3,
-        name: "Sylvia Palmer",
-        avatar: "https://i.imgur.com/LpaY82x.png",
-      },
-    },
-  },
-  3: {
-    id: 3,
-    time: "2pm",
-  },
-  4: {
-    id: 4,
-    time: "3pm",
-    interview: {
-      student: "Archie Andrews",
-      interviewer: {
-        id: 4,
-        name: "Cohana Roy",
-        avatar: "https://i.imgur.com/FK8V841.jpg",
-      },
-    },
-  },
-  5: {
-    id: 5,
-    time: "4pm",
-  },
-};
 
 export default function Application(props) {
   const [state, setState] = useState({
@@ -51,18 +13,25 @@ export default function Application(props) {
     appointments: {},
   });
 
+  const dayURL = "http://localhost:8001/api/days";
+  const appointmentURL = "http://localhost:8001/api/appointments";
+  const interviewerURL = "http://localhost:8001/api/interviewers";
+
   const setDay = (day) => setState({ ...state, day });
 
-  const setDays = (days) => {
-    setState((prev) => ({ ...prev, days }));
-  };
+  const dailyAppointments = getAppointmentsForDay(state, state.day);
 
   useEffect(() => {
-    const dayURL = "http://localhost:8001/api/days";
-    Axios.get(dayURL).then((response) => setDays([...response.data]));
+    Promise.all([Axios.get(dayURL), Axios.get(appointmentURL)]).then((all) => {
+      setState((prev) => ({
+        ...prev,
+        days: all[0].data,
+        appointments: all[1].data,
+      }));
+    });
   }, []);
 
-  const appointment = Object.values(appointments).map((appointment) => {
+  const appointment = dailyAppointments.map((appointment) => {
     return <Appointment key={appointment.id} {...appointment} />;
   });
 
