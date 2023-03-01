@@ -31,6 +31,7 @@ export default function Application(props) {
         ...prev,
         days: all[0].data,
         appointments: all[1].data,
+        interviewers: all[2].data,
       }));
     });
   }, []);
