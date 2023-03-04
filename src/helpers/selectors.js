@@ -28,4 +28,22 @@ function getInterview(state, interview) {
   return result;
 }
 
-module.exports = { getAppointmentsForDay, getInterview };
+function getInterviewersForDay(state, name) {
+  let interviewersIdArr = [];
+  let interviewersArr = [];
+  state.days.map((day) => {
+    if (day.name === name) {
+      interviewersIdArr = day.interviewers;
+    }
+  });
+
+  for (let id of interviewersIdArr) {
+    console.log(state.interviewers[id]);
+    interviewersArr.push(state.interviewers[id]);
+  }
+
+  console.log(interviewersArr);
+  return interviewersArr;
+}
+
+module.exports = { getAppointmentsForDay, getInterview, getInterviewersForDay };
