@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
 import Axios from "axios";
 import "components/Application.scss";
-import { getAppointmentsForDay, getInterview } from "helpers/selectors";
+import {
+  getAppointmentsForDay,
+  getInterview,
+  getInterviewersForDay,
+} from "helpers/selectors";
 
 import DayList from "./DayList";
 import Appointment from "./Appointment";
@@ -20,6 +24,28 @@ export default function Application(props) {
   const setDay = (day) => setState({ ...state, day });
 
   const dailyAppointments = getAppointmentsForDay(state, state.day);
+  const interviewers = getInterviewersForDay(state, state.day);
+
+  function bookInterview(id, interview) {
+    const appointment = {
+      ...state.appointments[id],
+      interview: { ...interview },
+    };
+
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment,
+    };
+
+    return Axios.put(`http://localhost:8001/api/appointments/${id}`, {
+      interview,
+    })
+      .then((res) => {
+        setState({ ...state, appointments });
+        return res.json();
+      })
+      .catch((err) => console.log(err));
+  }
 
   useEffect(() => {
     Promise.all([
@@ -45,6 +71,8 @@ export default function Application(props) {
         id={appointment.id}
         time={appointment.time}
         interview={interview}
+        interviewers={interviewers}
+        bookInterview={bookInterview}
       />
     );
   });
@@ -59,7 +87,12 @@ export default function Application(props) {
         />
         <hr className="sidebar__separator sidebar--centered" />
         <nav className="sidebar__menu">
-          <DayList days={state.days} day={state.day} setDay={setDay} />
+          <DayList
+            days={state.days}
+            day={state.day}
+            setDay={setDay}
+            bookInterview={bookInterview}
+          />
         </nav>
         <img
           className="sidebar__lhl sidebar--centered"

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import classNames from "classnames";
 
 import InterviewerList from "components/InterviewerList";
 import Button from "components/Button";
@@ -29,10 +28,6 @@ export default function Form(props) {
             placeholder="Enter Student Name"
             onChange={(event) => setStudent(event.target.value)}
             value={student}
-            /*
-            This must be a controlled component
-            your code goes here
-          */
           />
         </form>
         <InterviewerList
@@ -46,7 +41,11 @@ export default function Form(props) {
           <Button danger onClick={cancel}>
             Cancel
           </Button>
-          <Button confirm onClick={() => props.onSave(student, interviewer)}>
+          <Button
+            confirm
+            onSubmit={(e) => e.preventDefault()}
+            onClick={() => props.onSave(student, interviewer)}
+          >
             Save
           </Button>
         </section>

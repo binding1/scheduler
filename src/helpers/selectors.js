@@ -38,11 +38,9 @@ function getInterviewersForDay(state, name) {
   });
 
   for (let id of interviewersIdArr) {
-    console.log(state.interviewers[id]);
     interviewersArr.push(state.interviewers[id]);
   }
 
-  console.log(interviewersArr);
   return interviewersArr;
 }
 
