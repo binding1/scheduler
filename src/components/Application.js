@@ -47,6 +47,25 @@ export default function Application(props) {
       .catch((err) => console.log(err));
   }
 
+  function cancelInterview(id) {
+    const appointment = {
+      ...state.appointments[id],
+      interview: null,
+    };
+
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment,
+    };
+
+    return Axios.delete(`http://localhost:8001/api/appointments/${id}`)
+      .then((res) => {
+        setState({ ...state, appointments });
+        return res.json();
+      })
+      .catch((err) => console.log(err));
+  }
+
   useEffect(() => {
     Promise.all([
       Axios.get(dayURL),
@@ -73,6 +92,7 @@ export default function Application(props) {
         interview={interview}
         interviewers={interviewers}
         bookInterview={bookInterview}
+        cancelInterview={cancelInterview}
       />
     );
   });
@@ -92,6 +112,7 @@ export default function Application(props) {
             day={state.day}
             setDay={setDay}
             bookInterview={bookInterview}
+            cancelInterview={cancelInterview}
           />
         </nav>
         <img
