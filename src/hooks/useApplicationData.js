@@ -43,10 +43,12 @@ export default function useApplicationData() {
 
     return Axios.put(`http://localhost:8001/api/appointments/${id}`, {
       interview,
-    }).then((res) => {
-      setState({ ...state, appointments });
-      return res.json();
-    });
+    })
+      .then((res) => {
+        setState({ ...state, appointments });
+        return res.json();
+      })
+      .catch((err) => console.log(err));
   }
 
   function cancelInterview(id) {
@@ -60,12 +62,20 @@ export default function useApplicationData() {
       [id]: appointment,
     };
 
-    return Axios.delete(`http://localhost:8001/api/appointments/${id}`).then(
-      (res) => {
+    // function updateSpots(dayName, days, appointments) {
+    //   const day = { ...state.days, [id]: day };
+
+    //   setState({ ...state, days });
+    // }
+
+    // const days = updateSpots("Monday", state.days, state.appointments);
+
+    return Axios.delete(`http://localhost:8001/api/appointments/${id}`)
+      .then((res) => {
         setState({ ...state, appointments });
         return res.json();
-      }
-    );
+      })
+      .catch((err) => console.log(err));
   }
 
   return {
