@@ -30,30 +30,35 @@ export default function useApplicationData() {
     });
   }, []);
 
-  //   function updateSpots() {
-  //     let apptArr = [];
-  //     let newSpots = 0;
-  //     const dayName = state.day;
-  //     const filteredDays = state.days.filter((day) => day.name === dayName);
-  //     const dayId = filteredDays[0].id - 1;
+  function updateSpots() {
+    let apptArr = [];
+    let newSpots = 0;
+    let dayId = 0;
 
-  //     state.days.map((day) => {
-  //       if (day.id === dayId + 1) {
-  //         apptArr = day.appointments;
-  //       }
-  //     });
+    for (let i of state.days) {
+      if (i.name === state.day) {
+        dayId = i.id;
+      }
+    }
 
-  //     for (let i of apptArr) {
-  //       if (state.appointments[i].interview) {
-  //         newSpots++;
-  //       }
-  //     }
+    state.days.map((day) => {
+      if (day.id === dayId) {
+        apptArr = day.appointments;
+      }
+    });
 
-  //     const day = { ...state.days[dayId], spots: newSpots };
-  //     const days = { ...state.days, [dayId]: day };
+    for (let i of apptArr) {
+      if (state.appointments[i].interview) {
+        newSpots++;
+      }
+    }
 
-  //     return days;
-  //   }
+    const day = { ...state.days[dayId - 1], spots: newSpots };
+    const days = [...state.days];
+    days[dayId - 1] = day;
+
+    return days;
+  }
 
   function bookInterview(id, interview) {
     const appointment = {
@@ -66,12 +71,12 @@ export default function useApplicationData() {
       [id]: appointment,
     };
 
-    // const days = updateSpots();
+    const days = updateSpots();
 
     return Axios.put(`http://localhost:8001/api/appointments/${id}`, {
       interview,
     }).then((res) => {
-      setState({ ...state, appointments });
+      setState({ ...state, appointments, days });
       return res;
     });
   }
@@ -87,11 +92,11 @@ export default function useApplicationData() {
       [id]: appointment,
     };
 
-    // const days = updateSpots();
+    const days = updateSpots();
 
     return Axios.delete(`http://localhost:8001/api/appointments/${id}`).then(
       (res) => {
-        setState({ ...state, appointments });
+        setState({ ...state, appointments, days });
         return res;
       }
     );

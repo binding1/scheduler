@@ -1,4 +1,5 @@
 function getAppointmentsForDay(state, name) {
+  // console.log(state.days);
   const filteredDays = state.days.filter((day) => day.name === name);
 
   if (filteredDays.length === 0) {
