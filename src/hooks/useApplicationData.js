@@ -30,6 +30,31 @@ export default function useApplicationData() {
     });
   }, []);
 
+  //   function updateSpots() {
+  //     let apptArr = [];
+  //     let newSpots = 0;
+  //     const dayName = state.day;
+  //     const filteredDays = state.days.filter((day) => day.name === dayName);
+  //     const dayId = filteredDays[0].id - 1;
+
+  //     state.days.map((day) => {
+  //       if (day.id === dayId + 1) {
+  //         apptArr = day.appointments;
+  //       }
+  //     });
+
+  //     for (let i of apptArr) {
+  //       if (state.appointments[i].interview) {
+  //         newSpots++;
+  //       }
+  //     }
+
+  //     const day = { ...state.days[dayId], spots: newSpots };
+  //     const days = { ...state.days, [dayId]: day };
+
+  //     return days;
+  //   }
+
   function bookInterview(id, interview) {
     const appointment = {
       ...state.appointments[id],
@@ -41,14 +66,14 @@ export default function useApplicationData() {
       [id]: appointment,
     };
 
+    // const days = updateSpots();
+
     return Axios.put(`http://localhost:8001/api/appointments/${id}`, {
       interview,
-    })
-      .then((res) => {
-        setState({ ...state, appointments });
-        return res.json();
-      })
-      .catch((err) => console.log(err));
+    }).then((res) => {
+      setState({ ...state, appointments });
+      return res;
+    });
   }
 
   function cancelInterview(id) {
@@ -62,20 +87,14 @@ export default function useApplicationData() {
       [id]: appointment,
     };
 
-    // function updateSpots(dayName, days, appointments) {
-    //   const day = { ...state.days, [id]: day };
+    // const days = updateSpots();
 
-    //   setState({ ...state, days });
-    // }
-
-    // const days = updateSpots("Monday", state.days, state.appointments);
-
-    return Axios.delete(`http://localhost:8001/api/appointments/${id}`)
-      .then((res) => {
+    return Axios.delete(`http://localhost:8001/api/appointments/${id}`).then(
+      (res) => {
         setState({ ...state, appointments });
-        return res.json();
-      })
-      .catch((err) => console.log(err));
+        return res;
+      }
+    );
   }
 
   return {
