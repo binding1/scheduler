@@ -86,4 +86,12 @@ export default {
       });
     }
   }),
+
+  put: jest.fn(() => {
+    return Promise.resolve({
+      status: 200,
+      statusText: "OK",
+      data: { student: "Lydia Miller-Jones", interviewer: "Sylvia Palmer" },
+    });
+  }),
 };
