@@ -94,4 +94,12 @@ export default {
       data: { student: "Lydia Miller-Jones", interviewer: "Sylvia Palmer" },
     });
   }),
+
+  delete: jest.fn((id) => {
+    return Promise.resolve({
+      status: 200,
+      statusText: "OK",
+      data: null,
+    });
+  }),
 };
