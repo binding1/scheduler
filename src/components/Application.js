@@ -12,16 +12,21 @@ import {
 
 import useApplicationData from "hooks/useApplicationData";
 
+//main applications
 export default function Application(props) {
+  //states are imported from useApplicationData.js
   const { state, setDay, bookInterview, cancelInterview } =
     useApplicationData();
 
+  //create daily appointments
   const dailyAppointments = getAppointmentsForDay(state, state.day);
 
+  //create daily schedule based on daily appointments
   const schedule = dailyAppointments.map((appointment) => {
     const interview = getInterview(state, appointment.interview);
     const interviewers = getInterviewersForDay(state, state.day);
 
+    //return appointment component, passing appointment info as props
     return (
       <Appointment
         key={appointment.id}
@@ -35,6 +40,7 @@ export default function Application(props) {
     );
   });
 
+  //left sidebar day list
   return (
     <main className="layout">
       <section className="sidebar">

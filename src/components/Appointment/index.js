@@ -20,11 +20,14 @@ const EDIT = "EDIT";
 const ERROR_SAVE = "ERROR_SAVE";
 const ERROR_DELETE = "ERROR_DELETE";
 
+//overall appointment component
 export default function Appointment(props) {
+  //custom hook that handles modes and transitions
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
   );
 
+  //useEffect to transition between SHOW and EMPTY modes
   useEffect(() => {
     if (props.interview && mode === EMPTY) {
       transition(SHOW);
@@ -50,19 +53,19 @@ export default function Appointment(props) {
         transition(ERROR_SAVE, true);
       });
   }
-
+  //function to transition to confirm delete
   function confirmDelete() {
     transition(CONFIRM);
   }
-
+  //function to transition to edit appointment
   function editInterview() {
     transition(EDIT);
   }
-
+  //function to transition to cancel delete
   function cancelDelete() {
     transition(SHOW);
   }
-
+  //function to transition to delete interview
   function deleteInterview() {
     transition(DELETING, true);
     props

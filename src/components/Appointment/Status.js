@@ -1,5 +1,6 @@
 import React from "react";
 
+//status mode for appointment component for saving or deleting requests
 export default function Status(props) {
   return (
     <main className="appointment__card appointment__card--status">

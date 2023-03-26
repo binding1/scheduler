@@ -1,3 +1,5 @@
+//testing the appointments components E2E
+
 describe("Appointments", () => {
   beforeEach(() => {
     cy.request("GET", "/api/debug/reset");

@@ -1,5 +1,5 @@
+//function to retrieve appoints based of the name of the day
 function getAppointmentsForDay(state, name) {
-  // console.log(state.days);
   const filteredDays = state.days.filter((day) => day.name === name);
 
   if (filteredDays.length === 0) {
@@ -14,6 +14,7 @@ function getAppointmentsForDay(state, name) {
   return filteredAppts;
 }
 
+//function to get interview information with student and interviewer
 function getInterview(state, interview) {
   if (!interview) {
     return null;
@@ -29,6 +30,7 @@ function getInterview(state, interview) {
   return result;
 }
 
+//function to get interviewers for a specific day
 function getInterviewersForDay(state, name) {
   let interviewersIdArr = [];
   let interviewersArr = [];

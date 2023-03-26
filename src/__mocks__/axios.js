@@ -1,3 +1,6 @@
+// mock axios requests for testing purposes in jest
+
+// mock appointments
 const fixtures = {
   days: [
     {
@@ -53,10 +56,12 @@ const fixtures = {
   },
 };
 
+//api request urls for mock usages
 const dayURL = "http://localhost:8001/api/days";
 const appointmentURL = "http://localhost:8001/api/appointments";
 const interviewerURL = "http://localhost:8001/api/interviewers";
 
+//mock routes for axios
 export default {
   defaults: { baseURL: "" },
   get: jest.fn((url) => {

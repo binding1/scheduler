@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import Axios from "axios";
 
+//custom hook that holds state changes for general application for day, appointments and interviewers
 export default function useApplicationData() {
   const [state, setState] = useState({
     day: "Monday",
@@ -13,8 +14,10 @@ export default function useApplicationData() {
   const appointmentURL = "http://localhost:8001/api/appointments";
   const interviewerURL = "http://localhost:8001/api/interviewers";
 
+  //function to set day state
   const setDay = (day) => setState({ ...state, day });
 
+  //load/render state of days, appointments and interviewers through axios get requests to api
   useEffect(() => {
     Promise.all([
       Axios.get(dayURL),
@@ -30,6 +33,7 @@ export default function useApplicationData() {
     });
   }, []);
 
+  //function to update number of spots
   function updateSpots(appointment) {
     let apptArr = [];
     let dayId = 0;
@@ -59,6 +63,7 @@ export default function useApplicationData() {
     setState((prev) => ({ ...prev, newDay }));
   }
 
+  //function to update state after interview has been booked, makes axios put request to api
   function bookInterview(id, interview) {
     const appointment = {
       ...state.appointments[id],
@@ -78,7 +83,7 @@ export default function useApplicationData() {
       return res;
     });
   }
-
+  //function to update state after interview has been cancelled, makes axios delete request to api
   function cancelInterview(id) {
     const appointment = {
       ...state.appointments[id],

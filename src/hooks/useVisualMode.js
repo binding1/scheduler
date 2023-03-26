@@ -1,5 +1,6 @@
 import { useState } from "react";
 
+//custom hook that handles changes of states and holds history for the appointment component
 export default function useVisualMode(initial) {
   const [history, setHistory] = useState([initial]);
 
