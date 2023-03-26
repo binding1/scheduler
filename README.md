@@ -4,7 +4,7 @@
 
 This project is a React-based single-page application that allows students to book and manage appointments with interviewers. This app utilizes React custom hooks for CRUD and communicates with an API server.
 
-This project utilized TDD, using unit testing, integration testing and E2E testing.
+This project utilized Test Driven Development (TDD), using unit testing, integration testing and E2E testing.
 
 Stack includes React, HTML, SASS, JavaScript, PostgreSQL, Axios
 Testing includes Jest, Storybook, Cypress
@@ -17,9 +17,9 @@ Testing includes Jest, Storybook, Cypress
 
 ## Screenshots
 
-!["Screenshot of Page](https://github.com/BrookeNagy123/PasswordKeepR/blob/master/public/images/1.png?raw=true)
+!["Screenshot of Page](https://github.com/binding1/scheduler/blob/master/public/images/home.png?raw=true)
 
-!["Screenshot of Form and Delete"](https://github.com/BrookeNagy123/PasswordKeepR/blob/master/public/images/1.png?raw=true)
+!["Screenshot of Form and Delete"](https://github.com/binding1/scheduler/blob/master/public/images/addanddelete.png?raw=true)
 
 ## Getting Started
 
@@ -48,3 +48,25 @@ npm run storybook
 ```sh
 npm run cypress
 ```
+
+## Dependencies
+
+- axios
+- Classnames
+- Normalize.css
+- Babel/core
+- React
+- React-dom
+- React-scripts
+- React-test-renderer
+- Storybook/addon-actions
+- Storybook/addon-backgrounds
+- Storybook/addon-links
+- Storybook/addons
+- Storybook/react
+- Testing-library/jest-dom
+- Testing-library/react
+- Testing-library/react-hooks
+- Babel-loader
+- SASS
+- prop-types
